@@ -19,18 +19,17 @@ public class TrafficController {
     public String cpu() {
         log.info("cpu");
         long value = 0;
-        for (long i = 0; i < 1000000000000L; i++) {
+        for (long i=0; i<100000000000L; i++) {
             value++;
         }
         return "ok value=" + value;
     }
 
     private List<String> list = new ArrayList<>();
-
     @GetMapping("/jvm")
     public String jvm() {
         log.info("jvm");
-        for (int i = 0; i < 1000000; i++) {
+        for (int i=0; i<1000000; ++i) {
             list.add("hello jvm!" + i);
         }
         return "ok";
@@ -44,7 +43,7 @@ public class TrafficController {
         log.info("jdbc");
         Connection conn = dataSource.getConnection();
         log.info("connection info={}", conn);
-        //conn.close(); //커넥션을 닫지 않는다.
+        // conn.close(); // 커넥션을 닫지 않는다.
         return "ok";
     }
 

@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class OrderServiceV0 implements OrderService {
 
-    private AtomicInteger stock = new AtomicInteger(100);
+    private final AtomicInteger stock = new AtomicInteger(100);
 
     @Override
     public void order() {
