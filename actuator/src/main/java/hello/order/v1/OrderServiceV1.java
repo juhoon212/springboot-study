@@ -22,11 +22,12 @@ public class OrderServiceV1 implements OrderService {
         log.info("주문");
         stock.decrementAndGet();
 
-        Counter.builder("my.order")
-                .tag("class", this.getClass().getName())
+        final Counter counter = Counter.builder("my.order")
+                .tag("class", this.getClass().getSimpleName())
                 .tag("method", "order")
                 .description("order")
-                .register(registry).increment();
+                .register(registry);
+        counter.increment();
     }
 
     @Override
@@ -35,8 +36,8 @@ public class OrderServiceV1 implements OrderService {
         stock.incrementAndGet();
 
         Counter.builder("my.order")
-                .tag("class", this.getClass().getName())
-                .tag("method", "cancel")
+                .tag("class", this.getClass().getSimpleName())
+                .tag("method", "cancel") // 메서드 이름을 태그로 추가
                 .description("order")
                 .register(registry).increment();
     }

@@ -13,7 +13,7 @@ public class OrderServiceV0 implements OrderService {
     @Override
     public void order() {
         log.info("주문");
-        stock.decrementAndGet();
+        stock.decrementAndGet(); // 재고 감소
     }
 
     @Override
