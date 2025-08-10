@@ -29,9 +29,10 @@ public class StockConfigV1 {
         @PostConstruct
         public void init() {
             Gauge.builder("my.stock", orderService, service -> {
-                log.info("stock gauge call");
-                return service.getStock().get();
-            }).register(registry);
+                        log.info("stock gauge call");
+                        return orderService.getStock().get();
+                    })
+                    .register(registry);
         }
     }
 }
