@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 //@Import(OrderConfigV0.class)
-@Import(OrderConfigV1.class)
 //@Import(OrderConfigV2.class)
 //@Import(OrderConfigV3.class)
 //@Import(OrderConfigV4.class)
 //@Import({OrderConfigV4.class, StockConfigV1.class})
 //@Import({OrderConfigV4.class, StockConfigV2.class})
+@Import(OrderConfigV2.class)
 @SpringBootApplication(scanBasePackages = "hello.controller")
 public class ActuatorApplication {
 
