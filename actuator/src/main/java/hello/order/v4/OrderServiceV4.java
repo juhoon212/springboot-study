@@ -9,11 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Timed("my.order")
+@Timed(value = "my.order")
 @Slf4j
 public class OrderServiceV4 implements OrderService {
-
-    private AtomicInteger stock = new AtomicInteger(100);
+    private final AtomicInteger stock = new AtomicInteger(100);
 
     @Override
     public void order() {
@@ -22,19 +21,19 @@ public class OrderServiceV4 implements OrderService {
         sleep(500);
     }
 
-    @Override
-    public void cancel() {
-        log.info("취소");
-        stock.incrementAndGet();
-        sleep(200);
-    }
-
-    private static void sleep(int l) {
+    private void sleep(int l) {
         try {
             Thread.sleep(l + new Random().nextInt(200));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void cancel() {
+        log.info("취소");
+        stock.incrementAndGet();
+        sleep(200);
     }
 
     @Override

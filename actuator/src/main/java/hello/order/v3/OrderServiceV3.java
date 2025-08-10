@@ -10,9 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 public class OrderServiceV3 implements OrderService {
-
     private final MeterRegistry registry;
-    private AtomicInteger stock = new AtomicInteger(100);
+    private final AtomicInteger stock = new AtomicInteger(100);
 
     public OrderServiceV3(MeterRegistry registry) {
         this.registry = registry;
@@ -20,8 +19,8 @@ public class OrderServiceV3 implements OrderService {
 
     @Override
     public void order() {
-        Timer timer = Timer.builder("my.order")
-                .tag("class", this.getClass().getName())
+        final Timer timer = Timer.builder("my.order")
+                .tag("class", this.getClass().getSimpleName())
                 .tag("method", "order")
                 .description("order")
                 .register(registry);
@@ -33,12 +32,20 @@ public class OrderServiceV3 implements OrderService {
         });
     }
 
+    private void sleep(int l) {
+        try {
+            Thread.sleep(l + new Random().nextInt(200));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void cancel() {
-        Timer timer = Timer.builder("my.order")
-                .tag("class", this.getClass().getName())
+        final Timer timer = Timer.builder("my.order")
+                .tag("class", this.getClass().getSimpleName())
                 .tag("method", "cancel")
-                .description("order")
+                .description("cancel")
                 .register(registry);
 
         timer.record(() -> {
@@ -46,14 +53,6 @@ public class OrderServiceV3 implements OrderService {
             stock.incrementAndGet();
             sleep(200);
         });
-    }
-
-    private static void sleep(int l) {
-        try {
-            Thread.sleep(l + new Random().nextInt(200));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
